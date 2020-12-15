@@ -17,6 +17,7 @@ import OkIcon from "./assets/core-toolbar-icons/check.svg";
 import DeleteIcon from "./assets/core-toolbar-icons/eraser.svg";
 import PointerIcon from "./assets/core-toolbar-icons/mouse-pointer.svg";
 import CloseIcon from "./assets/core-toolbar-icons/times.svg";
+import Droplet from "./assets/core-toolbar-icons/droplet.svg";
 
 import Logo from "./assets/markerjs-logo-m.svg";
 import Config, { MarkerColors } from './Config';
@@ -30,6 +31,7 @@ import { HighlightMarker } from './markers/highlight/HighlightMarker';
 import { TextMarker } from './markers/text/TextMarker';
 import { LineMarker } from './markers/line/LineMarker';
 import { ArrowMarker } from './markers/arrow/ArrowMarker';
+import doc = Mocha.reporters.doc;
 
 export class MarkerArea {
     private target: HTMLImageElement;
@@ -73,6 +75,11 @@ export class MarkerArea {
             icon: DeleteIcon,
             name: "delete",
             tooltipText: "Delete",
+        },
+        {
+            icon: Droplet,
+            name: "color-picker",
+            tooltipText: "Select Color",
         },
         {
             name: "separator",
@@ -236,7 +243,6 @@ export class MarkerArea {
                 }
             }
         }
-        
         this.markers.push(marker);
         this.selectMarker(marker);
 
@@ -385,6 +391,7 @@ export class MarkerArea {
 
     private setStyles = () => {
         const editorStyleSheet = document.createElementNS("http://www.w3.org/2000/svg", "style");
+        editorStyleSheet.id = "svg-css";
         editorStyleSheet.innerHTML = `
             .rect-marker .render-visual {
                 stroke: ${this.markerColors.mainColor};
@@ -444,11 +451,24 @@ export class MarkerArea {
     }
 
     private toolbarClick = (ev: MouseEvent, toolbarItem: ToolbarItem) => {
+        const colorPickerInput = document.getElementById("color-picker-input") as HTMLInputElement;
+
         if (toolbarItem.markerType) {
-            this.addMarker(toolbarItem.markerType);
+            if (toolbarItem.name !== "color-picker") {
+                // console.log(Math.random().toString(36).substring(7));
+                if (this.markerColors.mainColor !== colorPickerInput.value) {
+                    this.markerColors.mainColor = colorPickerInput.value;
+                    this.setStyles();
+                }
+            }
+            this.addMarker(toolbarItem.markerType)
         } else {
             // command button
             switch (toolbarItem.name) {
+                case "color-picker": {
+                    document.getElementById("color-picker-input").click();
+                    break;
+                }
                 case "delete": {
                     this.deleteActiveMarker();
                     break;
