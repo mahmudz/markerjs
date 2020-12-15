@@ -6,7 +6,6 @@ export class SvgHelper {
         attributes?: Array<[string, string]>,
     ): SVGRectElement => {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-
         rect.setAttribute("width", width.toString());
         rect.setAttribute("height", height.toString());
         if (attributes) {

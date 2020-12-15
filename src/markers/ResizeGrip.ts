@@ -3,7 +3,7 @@ import { SvgHelper } from "../helpers/SvgHelper";
 export class ResizeGrip {
     public visual: SVGGraphicsElement;
 
-    public readonly GRIP_SIZE = 10;
+    public readonly GRIP_SIZE = 5;
 
     constructor() {
         this.visual = SvgHelper.createCircle(this.GRIP_SIZE,

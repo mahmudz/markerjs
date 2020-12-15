@@ -13,8 +13,8 @@ export class RectMarkerBase extends RectangularMarkerBase {
 
     protected setup() {
         super.setup();
-
         this.markerRect = SvgHelper.createRect(this.width, this.height);
+        this.markerRect.style.stroke = "#ff0";
         this.addToRenderVisual(this.markerRect);
     }
 

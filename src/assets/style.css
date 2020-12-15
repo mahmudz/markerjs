@@ -114,3 +114,9 @@
 .markerjs-text-editor .markerjs-text-editor-button:hover {
     fill: #ff8080;
 }
+
+#color-picker-input::-webkit-color-swatch-wrapper {
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+}
